@@ -1,0 +1,90 @@
+/* ─── Legal Docs PDF Style ─── */
+@page {
+  size: A4;
+  margin: 0;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', 'Segoe UI', -apple-system, sans-serif;
+  color: #1e293b;
+  line-height: 1.75;
+  font-size: 10.5pt;
+  margin: 0;
+  padding: 0;
+}
+
+.doc-wrapper {
+  max-width: 100%;
+  padding: 0;
+}
+
+/* ── Headings ── */
+h1 { font-size: 18pt; color: #0f172a; margin-top: 0; margin-bottom: 8mm; font-weight: 700; border-bottom: 2px solid #0f766e; padding-bottom: 3mm; }
+h2 { font-size: 14pt; color: #0f172a; margin-top: 8mm; margin-bottom: 4mm; font-weight: 600; }
+h3 { font-size: 12pt; color: #334155; margin-top: 6mm; margin-bottom: 3mm; font-weight: 600; }
+
+/* ── Tables ── */
+table { width: 100%; border-collapse: collapse; margin: 4mm 0; font-size: 10pt; }
+th, td { border: 1px solid #cbd5e1; padding: 2.5mm 3mm; text-align: left; vertical-align: top; }
+th { background: #f1f5f9; font-weight: 600; color: #0f172a; }
+tr:nth-child(even) td { background: #f8fafc; }
+
+/* ── Code blocks & pre ── */
+pre, code { font-family: 'JetBrains Mono', 'Cascadia Code', 'Consolas', monospace; font-size: 9pt; }
+pre { background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 3px; padding: 3mm 4mm; overflow-x: auto; white-space: pre-wrap; }
+code { background: #f1f5f9; padding: 0.5mm 1.5mm; border-radius: 2px; color: #0f172a; }
+
+/* ── Lists ── */
+ul, ol { margin: 2mm 0 2mm 5mm; }
+li { margin-bottom: 1mm; }
+ul li { list-style-type: disc; }
+ul li ul li { list-style-type: circle; }
+
+/* ── Blockquote ── */
+blockquote {
+  border-left: 3px solid #0f766e;
+  background: #f0fdfa;
+  margin: 3mm 0;
+  padding: 2mm 4mm;
+  font-size: 10pt;
+  color: #334155;
+}
+
+/* ── Horizontal rules ── */
+hr { border: none; border-top: 1px solid #e2e8f0; margin: 5mm 0; }
+
+/* ── Checkbox lists ── */
+input[type="checkbox"] { margin-right: 2mm; }
+
+/* ── Strong / emphasis ── */
+strong { color: #0f172a; }
+em { color: #475569; }
+
+/* ── Signature sections ── */
+p:has(strong:contains("Tanda tangan")) { margin-top: 6mm; }
+
+/* ── Page breaks ── */
+h1 { page-break-before: auto; }
+h1:first-of-type { page-break-before: avoid; }
+section, .doc-wrapper > :nth-child(n+2) { page-break-inside: avoid; }
+
+/* ── Cover / table-like sections ── */
+table + p { margin-top: 3mm; }
+
+/* ── Input placeholders in markdown ── */
+code:contains("..."), code:contains("[") { background: #fef3c7; color: #92400e; }
+
+/* ── Checklist items with brackets ── */
+p:contains("[ ]"), p:contains("[x]"), p:contains("[✓]") {
+  font-family: 'Inter', sans-serif;
+}
+
+/* ── Tables for invoices / summaries ── */
+table:first-of-type { margin-top: 0; }
+
+/* ── Print-specific ── */
+@media print {
+  body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}

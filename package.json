@@ -1,0 +1,25 @@
+{
+  "name": "legal-docs",
+  "version": "1.0.0",
+  "description": "Template dokumen standar untuk project freelance pembuatan website/aplikasi. Semua dalam Bahasa Indonesia, format Markdown (.md) — tinggal isi & convert ke PDF/docx kalo perlu.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abdanzamzam/freelance-docs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/abdanzamzam/freelance-docs/issues"
+  },
+  "homepage": "https://github.com/abdanzamzam/freelance-docs#readme",
+  "dependencies": {
+    "marked": "^18.0.7",
+    "puppeteer": "^25.4.0"
+  }
+}
