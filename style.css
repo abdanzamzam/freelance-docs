@@ -1,4 +1,4 @@
-/* ─── Legal Docs PDF Style ─── */
+/* ─── Legal Docs Professional PDF Style ─── */
 @page {
   size: A4;
   margin: 0;
@@ -13,6 +13,7 @@ body {
   font-size: 10.5pt;
   margin: 0;
   padding: 0;
+  background: #fff;
 }
 
 .doc-wrapper {
@@ -20,27 +21,219 @@ body {
   padding: 0;
 }
 
+/* ── Document Header ── */
+.doc-header {
+  text-align: center;
+  margin-bottom: 10mm;
+  padding-bottom: 5mm;
+  border-bottom: 2px solid #0f766e;
+}
+
+.doc-header h1 {
+  font-size: 18pt;
+  color: #0f172a;
+  margin: 0 0 2mm 0;
+  font-weight: 700;
+  border: none;
+  padding: 0;
+}
+
+.doc-header .doc-sub {
+  font-size: 9pt;
+  color: #64748b;
+  font-weight: 400;
+}
+
+.doc-header .doc-nomor {
+  font-size: 10pt;
+  color: #475569;
+  margin-top: 3mm;
+  font-weight: 500;
+}
+
+.doc-header .doc-tanggal {
+  font-size: 9pt;
+  color: #64748b;
+}
+
+/* ── Document Body ── */
+.doc-body {
+  padding: 0;
+}
+
 /* ── Headings ── */
-h1 { font-size: 18pt; color: #0f172a; margin-top: 0; margin-bottom: 8mm; font-weight: 700; border-bottom: 2px solid #0f766e; padding-bottom: 3mm; }
-h2 { font-size: 14pt; color: #0f172a; margin-top: 8mm; margin-bottom: 4mm; font-weight: 600; }
-h3 { font-size: 12pt; color: #334155; margin-top: 6mm; margin-bottom: 3mm; font-weight: 600; }
+h1 {
+  font-size: 16pt;
+  color: #0f172a;
+  margin-top: 10mm;
+  margin-bottom: 6mm;
+  font-weight: 700;
+  border-bottom: 1.5px solid #e2e8f0;
+  padding-bottom: 2mm;
+}
+
+h2 {
+  font-size: 13pt;
+  color: #0f172a;
+  margin-top: 8mm;
+  margin-bottom: 4mm;
+  font-weight: 600;
+}
+
+h3 {
+  font-size: 11pt;
+  color: #334155;
+  margin-top: 6mm;
+  margin-bottom: 3mm;
+  font-weight: 600;
+}
+
+h4 {
+  font-size: 10.5pt;
+  color: #475569;
+  margin-top: 4mm;
+  margin-bottom: 2mm;
+  font-weight: 600;
+}
+
+h1:first-of-type {
+  margin-top: 0;
+}
+
+/* ── Info Box ── */
+.info-box {
+  background: #f0fdfa;
+  border: 1px solid #0f766e;
+  border-left: 4px solid #0f766e;
+  border-radius: 2px;
+  padding: 3mm 4mm;
+  margin-bottom: 6mm;
+  font-size: 9.5pt;
+  color: #475569;
+}
+
+.info-box strong {
+  color: #0f766e;
+}
+
+/* ── Party Section (Pihak Pertama / Kedua) ── */
+.party-section {
+  margin: 4mm 0 6mm 0;
+  padding: 3mm 0;
+}
+
+.party-section .party-title {
+  font-weight: 600;
+  color: #0f766e;
+  font-size: 11pt;
+  margin-bottom: 1mm;
+}
+
+.party-section .party-detail {
+  margin-left: 5mm;
+  line-height: 2;
+}
+/* ── pasal / article styling ── */
+.pasal-title {
+  font-weight: 700;
+  color: #0f172a;
+  font-size: 11pt;
+  margin-top: 5mm;
+  margin-bottom: 2mm;
+  background: #f8fafc;
+  padding: 1.5mm 3mm;
+  border-left: 3px solid #0f766e;
+}
 
 /* ── Tables ── */
-table { width: 100%; border-collapse: collapse; margin: 4mm 0; font-size: 10pt; }
-th, td { border: 1px solid #cbd5e1; padding: 2.5mm 3mm; text-align: left; vertical-align: top; }
-th { background: #f1f5f9; font-weight: 600; color: #0f172a; }
-tr:nth-child(even) td { background: #f8fafc; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 4mm 0;
+  font-size: 9.5pt;
+}
+
+th, td {
+  border: 1px solid #cbd5e1;
+  padding: 2mm 3mm;
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  background: #f1f5f9;
+  font-weight: 600;
+  color: #0f172a;
+  font-size: 9pt;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+tr:nth-child(even) td {
+  background: #fafbfc;
+}
 
 /* ── Code blocks & pre ── */
-pre, code { font-family: 'JetBrains Mono', 'Cascadia Code', 'Consolas', monospace; font-size: 9pt; }
-pre { background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 3px; padding: 3mm 4mm; overflow-x: auto; white-space: pre-wrap; }
-code { background: #f1f5f9; padding: 0.5mm 1.5mm; border-radius: 2px; color: #0f172a; }
+pre, code {
+  font-family: 'JetBrains Mono', 'Cascadia Code', 'Consolas', monospace;
+  font-size: 8.5pt;
+}
+
+pre {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 2px;
+  padding: 2.5mm 3.5mm;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  line-height: 1.5;
+}
+
+code {
+  background: #f1f5f9;
+  padding: 0.3mm 1.5mm;
+  border-radius: 2px;
+  color: #0f172a;
+}
 
 /* ── Lists ── */
-ul, ol { margin: 2mm 0 2mm 5mm; }
-li { margin-bottom: 1mm; }
+ul, ol {
+  margin: 2mm 0 2mm 5mm;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 1mm;
+}
+
 ul li { list-style-type: disc; }
 ul li ul li { list-style-type: circle; }
+ol li { list-style-type: decimal; }
+
+/* ── Checklist Items ── */
+.checklist {
+  list-style: none;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.checklist li {
+  padding-left: 5mm;
+  position: relative;
+}
+
+.checklist li::before {
+  content: "□";
+  position: absolute;
+  left: 0;
+  color: #64748b;
+  font-size: 10pt;
+}
+
+.checklist li.checked::before {
+  content: "☑";
+  color: #0f766e;
+}
 
 /* ── Blockquote ── */
 blockquote {
@@ -52,39 +245,127 @@ blockquote {
   color: #334155;
 }
 
+blockquote p { margin: 0; }
+
 /* ── Horizontal rules ── */
-hr { border: none; border-top: 1px solid #e2e8f0; margin: 5mm 0; }
-
-/* ── Checkbox lists ── */
-input[type="checkbox"] { margin-right: 2mm; }
-
-/* ── Strong / emphasis ── */
-strong { color: #0f172a; }
-em { color: #475569; }
-
-/* ── Signature sections ── */
-p:has(strong:contains("Tanda tangan")) { margin-top: 6mm; }
-
-/* ── Page breaks ── */
-h1 { page-break-before: auto; }
-h1:first-of-type { page-break-before: avoid; }
-section, .doc-wrapper > :nth-child(n+2) { page-break-inside: avoid; }
-
-/* ── Cover / table-like sections ── */
-table + p { margin-top: 3mm; }
-
-/* ── Input placeholders in markdown ── */
-code:contains("..."), code:contains("[") { background: #fef3c7; color: #92400e; }
-
-/* ── Checklist items with brackets ── */
-p:contains("[ ]"), p:contains("[x]"), p:contains("[✓]") {
-  font-family: 'Inter', sans-serif;
+hr {
+  border: none;
+  border-top: 1px solid #e2e8f0;
+  margin: 5mm 0;
 }
 
-/* ── Tables for invoices / summaries ── */
-table:first-of-type { margin-top: 0; }
+/* ── Strong / emphasis ── */
+strong {
+  color: #0f172a;
+}
+
+em {
+  color: #475569;
+}
+
+/* ── Signature Section ── */
+.signature-section {
+  margin-top: 10mm;
+  padding-top: 5mm;
+  border-top: 1px solid #e2e8f0;
+}
+
+.signature-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8mm;
+}
+
+.signature-block {
+  width: 45%;
+  text-align: center;
+}
+
+.signature-block .sig-line {
+  margin-top: 15mm;
+  border-top: 1px solid #1e293b;
+  padding-top: 2mm;
+  font-size: 10pt;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.signature-block .sig-title {
+  font-size: 9pt;
+  color: #64748b;
+  margin-bottom: 2mm;
+}
+
+.signature-block .sig-materai {
+  font-size: 8pt;
+  color: #94a3b8;
+  margin-top: 3mm;
+}
+
+/* ── Invoice Template ── */
+.invoice-header-box {
+  border: 2px solid #0f766e;
+  padding: 5mm 6mm;
+  margin-bottom: 6mm;
+  text-align: center;
+}
+
+.invoice-header-box h1 {
+  margin: 0;
+  border: none;
+  font-size: 22pt;
+  color: #0f766e;
+  letter-spacing: 3px;
+}
+
+.invoice-table-summary td:last-child {
+  text-align: right;
+  font-weight: 600;
+}
+
+.invoice-total-row td {
+  border-top: 2px solid #0f172a;
+  font-weight: 700;
+  font-size: 11pt;
+  background: #f8fafc !important;
+}
+
+/* ── UAT Checklist ── */
+.uat-status {
+  display: inline-block;
+  padding: 1mm 3mm;
+  border-radius: 2px;
+  font-size: 9pt;
+  font-weight: 600;
+}
+
+.uat-status.pass {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.uat-status.fail {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+/* ── Page breaks ── */
+h1 {
+  page-break-before: always;
+}
+
+h1:first-of-type {
+  page-break-before: avoid;
+}
+
+section, .doc-wrapper > :nth-child(n+2) {
+  page-break-inside: avoid;
+}
 
 /* ── Print-specific ── */
 @media print {
-  body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
 }
