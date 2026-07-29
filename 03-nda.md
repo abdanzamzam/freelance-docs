@@ -13,19 +13,19 @@ Tanggal: [Tanggal]
 
 Antara:
 
-**PIHAK PERTAMA** (Pemilik Informasi)
+<!--PIHAK:PERTAMA: Pemilik Informasi-->
 Nama : [Nama / Perusahaan Client]
 Alamat : [Alamat]
 No. Identitas : [KTP/SIM/NPWP]
-— selanjutnya disebut **"Pemilik"**
+<!--/PIHAK-->
 
 dan
 
-**PIHAK KEDUA** (Penerima Informasi)
+<!--PIHAK:KEDUA: Penerima Informasi-->
 Nama Perusahaan : [Nama Perusahaan Kamu / Nama Kamu]
 Alamat : [Alamat]
 No. Identitas : [KTP/SIM/NPWP]
-— selanjutnya disebut **"Penerima"**
+<!--/PIHAK-->
 
 ---
 
@@ -64,10 +64,12 @@ Perjanjian ini tunduk pada hukum Republik Indonesia.
 
 **Demikian perjanjian ini dibuat dalam rangkap 2 (dua) untuk masing-masing pihak.**
 
+<!--SIG_START-->
 [Tempat], [Tanggal]
 
-**PIHAK PERTAMA** &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **PIHAK KEDUA**
+**PIHAK PERTAMA** **PIHAK KEDUA**
 
-(Tanda tangan & meterai) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (Tanda tangan & meterai)
+[TTD_LEFT] [TTD_RIGHT]
 
-**[Nama Client]** &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **[Nama Kamu]**
+**[Nama Client]** **[Nama Kamu]**
+<!--SIG_END-->

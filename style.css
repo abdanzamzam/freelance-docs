@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════
-   LEGAL DOCUMENT — Classic Professional Style
-   Serif font, formal layout, proper margins
+   LEGAL DOCUMENT — Standar Dokumen Indonesia
+   Font: Times New Roman 12pt, 1.5 spasi
    ═══════════════════════════════════════════════════ */
 
 @page {
@@ -13,8 +13,8 @@
 body {
   font-family: 'Times New Roman', Times, Georgia, 'Liberation Serif', serif;
   color: #111;
-  line-height: 1.6;
-  font-size: 11.5pt;
+  line-height: 1.5;
+  font-size: 12pt;
   margin: 0;
   padding: 0;
   background: #fff;
@@ -26,76 +26,69 @@ body {
 }
 
 /* ─────────────────────────────────────────────
-   RUNNING DOC HEADER
-   Clean: [ID]  [centered TITLE]  [date]
+   HEADER
    ───────────────────────────────────────────── */
 .doc-header {
   margin-bottom: 6mm;
   padding-bottom: 2mm;
-  border-bottom: 1px solid #111;
-}
-
-.doc-header-inner {
-  width: 100%;
 }
 
 .doc-header-row {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  font-size: 8.5pt;
+  font-size: 9pt;
 }
 
 .doc-id {
   font-family: 'Courier New', monospace;
-  color: #555;
-  width: 25%;
+  color: #888;
+  width: 20%;
   text-align: left;
+  font-size: 8pt;
 }
 
-.doc-title-line {
+.doc-title {
   font-weight: 700;
-  font-size: 12pt;
+  font-size: 13pt;
   text-align: center;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  width: 50%;
+  letter-spacing: 0.5px;
+  width: 60%;
+  color: #111;
 }
 
 .doc-date {
   font-style: italic;
-  color: #555;
-  width: 25%;
+  color: #888;
+  width: 20%;
   text-align: right;
+  font-size: 9pt;
 }
 
-.doc-header-spacer {
-  height: 1px;
+.doc-header-line {
+  height: 1.5px;
   background: #111;
-  margin-top: 2mm;
+  margin-top: 2.5mm;
 }
 
 /* ─────────────────────────────────────────────
-   INFO BOX — Fase/Tujuan card
+   INFO BOX
    ───────────────────────────────────────────── */
 .info-box {
-  background: #f8f8f8;
+  background: #f5f5f5;
   border: 0.5px solid #bbb;
-  border-left: 3px solid #666;
+  border-left: 3px solid #555;
   padding: 2mm 3mm;
   margin-bottom: 5mm;
-  font-size: 10pt;
+  font-size: 10.5pt;
   color: #333;
-  line-height: 1.5;
+  line-height: 1.4;
 }
 
 .info-box p {
   margin: 0;
   text-align: left;
-}
-
-.info-box br {
-  display: none;
 }
 
 /* ─────────────────────────────────────────────
@@ -113,24 +106,17 @@ h1 {
 h1:first-of-type { page-break-before: avoid; margin-top: 0; }
 
 h2 {
-  font-size: 12pt;
+  font-size: 12.5pt;
   font-weight: 700;
   margin: 5mm 0 3mm 0;
 }
 
-.pasal-title {
-  font-size: 11.5pt;
+h3 {
+  font-size: 12pt;
   font-weight: 700;
   margin: 4mm 0 2mm 0;
   font-variant: small-caps;
   letter-spacing: 0.3px;
-}
-
-.subsection-title {
-  font-size: 11pt;
-  font-weight: 700;
-  margin: 3mm 0 2mm 0;
-  font-style: italic;
 }
 
 /* ─────────────────────────────────────────────
@@ -139,81 +125,100 @@ h2 {
 p {
   margin: 0 0 1.5mm 0;
   text-align: justify;
+  line-height: 1.5;
 }
 p:empty { display: none; }
 
 /* ─────────────────────────────────────────────
    PARTY SECTIONS (PIHAK PERTAMA / KEDUA)
    ───────────────────────────────────────────── */
+.party-section {
+  margin: 3mm 0;
+  padding: 2mm 0;
+}
+
 .party-header {
   text-align: center;
   font-weight: 700;
-  font-size: 11pt;
-  margin: 3mm 0 0.5mm 0;
+  font-size: 12pt;
+  margin-bottom: 1mm;
   text-transform: uppercase;
-  letter-spacing: 1.5px;
+  letter-spacing: 1px;
 }
 
 .party-desc {
   text-align: center;
-  font-size: 10pt;
-  margin-bottom: 2mm;
-  color: #444;
+  font-size: 11pt;
+  margin-bottom: 1mm;
   font-style: italic;
+  color: #444;
+}
+
+.party-details {
+  font-size: 11pt;
+  padding-left: 3mm;
+  line-height: 1.8;
+  color: #333;
 }
 
 /* ─────────────────────────────────────────────
    CLOSING STATEMENT
    ───────────────────────────────────────────── */
 .closing-statement {
-  margin: 6mm 0 3mm 0;
+  margin: 8mm 0 4mm 0;
   text-align: center;
-  color: #444;
-  font-size: 10pt;
   font-style: italic;
+  font-size: 11pt;
+  color: #444;
   border-top: 0.5px solid #ccc;
   padding-top: 3mm;
 }
 
-.closing-statement p { text-align: center; }
+.closing-statement p { margin: 0; text-align: center; }
 
 /* ─────────────────────────────────────────────
-   SIGNATURE / TTD
+   SIGNATURE
    ───────────────────────────────────────────── */
-.ttd-line {
-  display: flex;
-  justify-content: space-between;
-  margin: 8mm 0 2mm 0;
+.signature-block {
+  margin: 10mm 0 3mm 0;
+  padding-top: 2mm;
 }
 
-.ttd-col {
+.signature-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2mm;
+}
+
+.sig-col {
   width: 45%;
   text-align: center;
 }
 
-.ttd-col .sig-space {
-  height: 15mm;
+.sig-space {
   display: block;
+  height: 15mm;
 }
 
-.ttd-col .sig-name {
+.sig-line {
   border-top: 0.5px solid #111;
-  padding-top: 1.5mm;
+  padding-top: 2mm;
   font-weight: 700;
-  font-size: 10.5pt;
+  font-size: 11pt;
+  margin: 0 5mm;
 }
 
-.ttd-col .sig-role {
-  font-size: 9pt;
+.sig-mark {
+  font-size: 9.5pt;
   color: #666;
-  margin-top: 0.5mm;
   font-style: italic;
+  padding: 0 2mm;
 }
 
-.ttd-col .sig-materai {
-  font-size: 8pt;
-  color: #999;
-  margin-top: 2mm;
+.sig-name {
+  font-weight: 700;
+  font-size: 11pt;
+  padding: 0 2mm;
 }
 
 /* ─────────────────────────────────────────────
@@ -223,7 +228,7 @@ table {
   width: 100%;
   border-collapse: collapse;
   margin: 3mm 0;
-  font-size: 10pt;
+  font-size: 10.5pt;
 }
 
 th, td {
@@ -231,18 +236,19 @@ th, td {
   padding: 1.5mm 2.5mm;
   text-align: left;
   vertical-align: top;
+  line-height: 1.4;
 }
 
 th {
   background: #eee;
   font-weight: 700;
-  font-size: 9pt;
+  font-size: 9.5pt;
 }
 
 tr:nth-child(even) td { background: #fafafa; }
 
 /* ─────────────────────────────────────────────
-   HORIZONTAL RULES
+   HR
    ───────────────────────────────────────────── */
 hr {
   border: none;
@@ -254,7 +260,7 @@ hr {
    LISTS
    ───────────────────────────────────────────── */
 ul, ol {
-  margin: 1.5mm 0 1.5mm 5mm;
+  margin: 1.5mm 0 1.5mm 6mm;
   padding: 0;
 }
 
@@ -264,24 +270,26 @@ ul li ul li { list-style-type: circle; }
 ol li { list-style-type: decimal; }
 
 /* ─────────────────────────────────────────────
-   CODE / MONOSPACE
+   STRONG / EM
    ───────────────────────────────────────────── */
-pre, code {
-  font-family: 'Courier New', Consolas, monospace;
-  font-size: 9pt;
+strong { color: #111; }
+em { color: #444; }
+
+/* ─────────────────────────────────────────────
+   BLOCKQUOTE (fallback)
+   ───────────────────────────────────────────── */
+blockquote {
+  margin: 2mm 0;
+  padding: 1mm 3mm;
+  border-left: 2px solid #ccc;
+  color: #444;
 }
 
-pre {
-  background: #f5f5f5;
-  border: 0.5px solid #ccc;
-  padding: 2mm 3.5mm;
-  white-space: pre-wrap;
-  line-height: 1.4;
-}
-
-code {
-  background: #f5f5f5;
-  padding: 0.2mm 1.5mm;
+/* ─────────────────────────────────────────────
+   SOW SPECIFIC
+   ───────────────────────────────────────────── */
+.acceptance-criteria {
+  margin: 2mm 0 4mm 6mm;
 }
 
 /* ─────────────────────────────────────────────
@@ -289,35 +297,18 @@ code {
    ───────────────────────────────────────────── */
 .invoice-box {
   border: 1.5px solid #111;
-  padding: 5mm 8mm;
+  padding: 4mm 6mm;
   margin-bottom: 5mm;
   text-align: center;
 }
 
 .invoice-box h1 {
-  margin: 0 0 1mm 0;
+  margin: 0;
   border: none;
   font-size: 20pt;
-  letter-spacing: 4px;
+  letter-spacing: 3px;
   page-break-before: avoid;
 }
-
-.invoice-total td {
-  border-top: 1.5px solid #111;
-  font-weight: 700;
-  background: #f5f5f5 !important;
-}
-
-/* ─────────────────────────────────────────────
-   UAT STATUS
-   ───────────────────────────────────────────── */
-.uat-pass { color: #166534; }
-.uat-fail { color: #991b1b; }
-
-/* ─────────────────────────────────────────────
-   PAGE BREAKS
-   ───────────────────────────────────────────── */
-.page-break { page-break-before: always; }
 
 /* ─────────────────────────────────────────────
    PRINT

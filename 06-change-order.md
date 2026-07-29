@@ -46,8 +46,11 @@ Jelaskan apa yang berubah dari scope awal:
 
 Dengan ini kedua pihak menyetujui perubahan sebagaimana dijelaskan di atas dan menganggapnya sebagai bagian dari perjanjian utama.
 
-**Klien** &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **Pengembang**
+<!--SIG_START-->
 
-(TTD) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (TTD)
+**Klien** **Pengembang**
 
-**[Nama Klien]** &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **[Nama Kamu]**
+[TTD_LEFT] [TTD_RIGHT]
+
+**[Nama Klien]** **[Nama Kamu]**
+<!--SIG_END-->

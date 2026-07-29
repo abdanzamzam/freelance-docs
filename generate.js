@@ -26,99 +26,172 @@ const chromePaths = [
   '/snap/bin/chromium',
 ].filter(p => { try { return !!readFileSync(p); } catch { return false; } });
 const chromePath = chromePaths[0];
-
 const outDir = join(__dirname, 'pdf');
 mkdirSync(outDir, { recursive: true });
 
-// ─── Preprocess markdown ──────────────────
+// ═══════════════════════════════════════════
+// PREPROCESSOR — strip custom markup before marked
+// ═══════════════════════════════════════════
 function preprocess(md) {
-  return md
-    // Checklist
-    .replace(/- \[ \]/g, '- ☐')
-    .replace(/- \[x\]/g, '- ☑')
-    .replace(/- \[✓\]/g, '- ☑')
-    // Clean nbsp entities
-    .replace(/&nbsp;/g, ' ')
-    // Collapse multiple spaces
-    .replace(/ {2,}/g, ' ');
+  let text = md
+    // Normalize newlines
+    .replace(/\r\n/g, '\n');
+
+  // STEP 1: Extract blockquotes info-lines and wrap them
+  // markdown blockquotes start with >
+  text = text.replace(/^> (.+)$/gm, '<INFO>$1</INFO>');
+
+  // STEP 2: Handle PIHAK sections
+  // <!--PIHAK:PERTAMA: desc-->
+  text = text.replace(/<!--PIHAK:(PERTAMA|KEDUA):\s*(.+?)-->/g, (m, num, desc) => {
+    return `<PARTY_HEAD>${num}</PARTY_HEAD>\n<PARTY_DESC>${desc}</PARTY_DESC>`;
+  });
+  text = text.replace(/<!--\/PIHAK-->/g, '<PARTY_END>');
+
+  // STEP 3: Handle SIG_START / SIG_END
+  text = text.replace(/<!--SIG_START-->/g, '<SIG_BLOCK>');
+  text = text.replace(/<!--SIG_END-->/g, '</SIG_BLOCK>');
+
+  // STEP 4: Handle TTD markers
+  text = text.replace(/\[TTD_LEFT\]\s*\[TTD_RIGHT\]/g, '<TTD_LINE></TTD_LINE>');
+
+  // STEP 5: Handle **Name** **Name** signature lines
+  // Detect line with two **Name** tokens separated by spaces
+  text = text.replace(/^\*\*(.+?)\*\*\s+\*\*(.+?)\*\*$/gm, (m, name1, name2) => {
+    return `<SIG_NAMES><name>${name1}</name><name>${name2}</name></SIG_NAMES>`;
+  });
+
+  // STEP 6: Handle [TTD_LEFT] [TTD_RIGHT] (already done)
+  // STEP 7: Handle Demikian statements
+  // Just let them pass through as regular text (italic)
+
+  return text;
 }
 
-// ─── Post-process HTML ─────────────────────
-function postprocess(html, docId) {
-  // Wrap PIHAK PERTAMA/KEDUA
-  html = html.replace(
-    /<p><strong>PIHAK (PERTAMA|KEDUA)<\/strong>\s*—\s*(.+?)<\/p>/g,
-    (m, num, desc) => `<div class="party-header">PIHAK ${num}</div><div class="party-desc">${desc}</div>`
-  );
+// ═══════════════════════════════════════════
+// POSTPROCESSOR — convert custom tags to HTML
+// ═══════════════════════════════════════════
+function postprocess(html, doc) {
+  // INFO boxes
+  const infoTags = [...html.matchAll(/<INFO>([^<]+)<\/INFO>/g)];
+  if (infoTags.length > 0) {
+    const infoHtml = infoTags.map(m => m[1]).map(line => {
+      // Handle bold markers
+      line = line.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+      return `<p>${line}</p>`;
+    }).join('');
+    // Remove original INFO tags and replace with one box
+    html = html.replace(/(<INFO>[^<]*<\/INFO>\s*)+/g, '');
+    // But we'll inject at the start of body - handled in the wrapping
+    html = html.replace('<div class="doc-body">', `<div class="doc-body">\n<div class="info-box">${infoHtml}</div>\n`);
+  }
 
-  // Pasal titles (h3)
-  html = html.replace(/<h3\s*>/g, '<h3 class="pasal-title">');
+  // PARTY sections
+  html = html.replace(/<PARTY_HEAD>(PERTAMA|KEDUA)<\/PARTY_HEAD>\n?<PARTY_DESC>([^<]+)<\/PARTY_DESC>([\s\S]*?)<PARTY_END>/g, (m, num, desc, detail) => {
+    // Clean detail - remove leading/trailing empty lines, bold markers
+    const cleaned = detail
+      .replace(/<p>/g, '')
+      .replace(/<\/p>/g, '<br>')
+      .replace(/<br>\s*<br>/g, '<br>')
+      .replace(/\*\*/g, '')
+      .replace(/^<br>/, '')
+      .replace(/<br>$/, '')
+      .split('<br>')
+      .filter(l => l.trim())
+      .map(l => l.trim())
+      .join('<br>');
 
-  // Tanda tangan sections: look for two **[Name]** separated by text
-  html = html.replace(
-    /\(Tanda tangan &amp; meterai\)\s*&amp;nbsp;\s*\(Tanda tangan &amp; meterai\)/g,
-    '(Tanda tangan & meterai)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Tanda tangan & meterai)'
-  );
+    return `<div class="party-section">
+      <div class="party-header">PIHAK ${num}</div>
+      <div class="party-desc">${desc}</div>
+      <div class="party-details">${cleaned}</div>
+    </div>`;
+  });
 
-  // Signature block — detect "[Nama Klien]" / "[Nama Kamu]" patterns
-  html = html.replace(
-    /<p>\*\*(?:Nama Klien|Nama Kamu|Nama (?:Client|Pengembang|Klien|Kamu))\*\*(?:<\/strong>)?(?:\s|&nbsp;)*(?:\*\*(?:Nama Klien|Nama Kamu|Nama (?:Client|Pengembang|Klien|Kamu))\*\*)?<\/p>/g,
-    (m) => {
-      // Extract names
-      const names = [...m.matchAll(/\*\*([^*]+)\*\*/g)].map(x => x[1]);
-      if (names.length === 0) return m;
+  // SIG_BLOCK
+  html = html.replace(/<SIG_BLOCK>([\s\S]*?)<\/SIG_BLOCK>/g, (m, inner) => {
+    // Extract the two names from SIG_NAMES tags
+    const names = [...inner.matchAll(/<name>([^<]+)<\/name>/g)].map(x => x[1]);
 
-      const cols = names.map(n => {
-        const isMaterai = n.toLowerCase().includes('tanda tangan') || n.toLowerCase().includes('meterai');
-        return `<div class="ttd-col">
-          <span class="sig-space"></span>
-          <div class="sig-name">${n.replace(/&amp;/g, '&')}</div>
-          <div class="sig-materai">(meterai Rp10.000)</div>
-        </div>`;
-      }).join('');
+    // Also check for plain ** ** in remaining text
+    const plainNames = [...inner.matchAll(/\*\*([^*]+)\*\*/g)].map(x => x[1]);
 
-      return `<div class="ttd-line">${cols}</div>`;
-    }
-  );
+    const allNames = names.length >= 2 ? names : (plainNames.length >= 2 ? plainNames : ['Pihak I', 'Pihak II']);
+
+    // Check if we have a TTD line
+    const hasTtd = inner.includes('<TTD_LINE>');
+
+    // Build signature columns — take LAST 2 names
+    const cols = allNames.slice(-2).map(n => {
+      const isNameBracket = n.includes('[') || n.includes(']') || n.includes('Nama');
+      return `<div class="sig-col">
+        <div class="sig-space"></div>
+        <div class="sig-line">${n.replace(/[*\[\]]/g, '')}</div>
+        ${hasTtd ? '<div class="sig-mark">(Tanda tangan &amp; meterai)</div>' : ''}
+      </div>`;
+    }).join('');
+
+    return `<div class="signature-block">
+      <div class="signature-row">${cols}</div>
+    </div>`;
+  });
+
+  // Remove leftover TTD_LINE tags
+  html = html.replace(/<TTD_LINE><\/TTD_LINE>/g, '');
+
+  // Handle remaining Demikian as closing
+  html = html.replace(/<p>\*\*Demikian([^*]+)\*\*<\/p>/g, (m, text) => {
+    return `<div class="closing-statement"><p>Demikian${text}</p></div>`;
+  });
+
+  // Clean up party end tags
+  html = html.replace(/<PARTY_END>/g, '');
+
+  // Checkbox inputs
+  html = html.replace(/<input[^>]*type="checkbox"[^>]*>/g, '☐ ');
+
+  // Clean empty paragraphs
+  html = html.replace(/<p>\s*<\/p>/g, '');
+
+  // Clean multiple <br>s
+  html = html.replace(/(<br>\s*){3,}/g, '<br><br>');
+
+  // Clean extra spacing in strong/em
+  html = html.replace(/<\/strong>\s*<strong>/g, ' / ');
 
   return html;
 }
 
-// ─── Build full HTML page ──────────────────
+// ═══════════════════════════════════════════
+// BUILD HTML
+// ═══════════════════════════════════════════
 function buildHtml(md, doc) {
   const titleMatch = md.match(/^# (.+)$/m);
   const docTitle = titleMatch ? titleMatch[1].replace(/\*\*/g, '') : doc.title;
-  const body = preprocess(md.replace(/^# .+\n?/, ''));
+  let body = md.replace(/^# .+\n?/, '');
+  body = preprocess(body);
+  let content = marked.parse(body);
+  content = postprocess(content, doc);
 
   const today = new Date().toLocaleDateString('id-ID', {
     day: 'numeric', month: 'long', year: 'numeric'
   });
 
-  // Manually parse the content with marked
-  const parsed = marked.parse(body);
-
-  // Post-process
-  const content = postprocess(parsed, doc.id);
-
   return `<!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <style>
-${css}
-  </style>
+  <style>${css}</style>
 </head>
 <body>
   <div class="doc-wrapper">
     <div class="doc-header">
-      <div class="doc-header-inner">
-        <div class="doc-header-row">
-          <span class="doc-id">${doc.id}</span>
-          <span class="doc-title-line">${docTitle}</span>
-          <span class="doc-date">${today}</span>
-        </div>
+      <div class="doc-header-row">
+        <div class="doc-id">${doc.id}</div>
+        <div class="doc-title">${docTitle}</div>
+        <div class="doc-date">${today}</div>
       </div>
-      <div class="doc-header-spacer"></div>
+      <div class="doc-header-line"></div>
     </div>
     <div class="doc-body">
       ${content}
@@ -128,7 +201,9 @@ ${css}
 </html>`;
 }
 
-// ─── Generate PDF ──────────────────────────
+// ═══════════════════════════════════════════
+// PDF
+// ═══════════════════════════════════════════
 async function genPdf(html, outPath) {
   const browser = await puppeteer.launch({
     headless: true,
@@ -137,28 +212,26 @@ async function genPdf(html, outPath) {
   });
   const page = await browser.newPage();
   await page.setContent(html, { waitUntil: 'networkidle0', timeout: 30000 });
-
   await page.pdf({
     path: outPath,
     format: 'A4',
     printBackground: true,
-    margin: { top: '20mm', bottom: '18mm', left: '22mm', right: '18mm' },
+    margin: { top: '18mm', bottom: '18mm', left: '20mm', right: '20mm' },
     displayHeaderFooter: true,
-    headerTemplate: `<div style="width:100%;font-size:7pt;color:#888;font-family:'Times New Roman',serif;padding:0 22mm;text-align:right;font-style:italic;">
-      <span class="title"></span>
-    </div>`,
-    footerTemplate: `<div style="width:100%;font-size:7.5pt;color:#888;font-family:'Times New Roman',serif;padding:0 22mm;text-align:center;">
-      <div style="border-top:0.5px solid #bbb;padding-top:0.5mm;">— <span class="pageNumber"></span> —</div>
+    headerTemplate: `<div style="width:100%;font-size:7pt;color:#aaa;font-family:'Times New Roman',serif;padding:0 20mm;text-align:right;"><span class="title"></span></div>`,
+    footerTemplate: `<div style="width:100%;font-size:8pt;color:#999;font-family:'Times New Roman',serif;padding:0 20mm;text-align:center;">
+      <div style="border-top:0.5px solid #ccc;padding-top:0.5mm;">— <span class="pageNumber"></span> —</div>
     </div>`,
   });
-
   await browser.close();
   const size = (readFileSync(outPath).length / 1024).toFixed(0);
   console.log(`✅ ${outPath.split('/').pop()} (${size}KB)`);
 }
 
-// ─── MAIN ───────────────────────────────────
-console.log('🚀 Generating legal PDF documents (Times New Roman style)...\n');
+// ═══════════════════════════════════════════
+// RUN
+// ═══════════════════════════════════════════
+console.log('🚀 Generating legal PDF documents...\n');
 
 for (const doc of docs) {
   const md = readFileSync(join(__dirname, doc.file), 'utf-8');

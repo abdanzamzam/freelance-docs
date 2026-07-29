@@ -52,11 +52,14 @@ Dengan ditandatanganinya BAST ini, Pihak Kedua wajib menyelesaikan pembayaran ak
 
 [Tempat], [Tanggal]
 
-**Pihak Pertama** &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **Pihak Kedua**
+<!--SIG_START-->
 
-(TTD) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (TTD)
+**Pihak Pertama** **Pihak Kedua**
 
-**[Nama Kamu]** &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **[Nama Klien]**
+[TTD_LEFT] [TTD_RIGHT]
+
+**[Nama Kamu]** **[Nama Klien]**
+<!--SIG_END-->
 
 ---
 

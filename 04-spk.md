@@ -105,13 +105,15 @@ Apabila Klien terlambat membayar lebih dari 7 hari kerja, Pengembang berhak meng
 
 **Demikian perjanjian ini dibuat dalam rangkap 2 (dua) bermeterai cukup untuk masing-masing pihak.**
 
+<!--SIG_START-->
 [Tempat], [Tanggal]
 
-**Klien** &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **Pengembang**
+**Klien** **Pengembang**
 
-(Tanda tangan & meterai) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (Tanda tangan & meterai)
+[TTD_LEFT] [TTD_RIGHT]
 
-**[Nama Klien]** &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **[Nama Kamu]**
+**[Nama Klien]** **[Nama Kamu]**
+<!--SIG_END-->
 
 ---
 

@@ -74,8 +74,11 @@ Biaya yang sudah dibayar tidak dapat dikembalikan (non-refundable).
 
 [Tempat], [Tanggal]
 
-**Pengembang** &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **Klien**
+<!--SIG_START-->
 
-(TTD) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (TTD)
+**Pengembang** **Klien**
 
-**[Nama Kamu]** &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **[Nama Klien]**
+[TTD_LEFT] [TTD_RIGHT]
+
+**[Nama Kamu]** **[Nama Klien]**
+<!--SIG_END-->

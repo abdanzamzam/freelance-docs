@@ -86,10 +86,12 @@ Project dinyatakan selesai dan diterima apabila:
 
 ---
 
+<!--SIG_START-->
 **Disetujui oleh:**
 
-Klien &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Pengembang
+**Klien** **Pengembang**
 
-(TTD) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (TTD)
+[TTD_LEFT] [TTD_RIGHT]
 
-**[Nama Klien]** &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **[Nama Kamu]**
+**[Nama Klien]** **[Nama Kamu]**
+<!--SIG_END-->
