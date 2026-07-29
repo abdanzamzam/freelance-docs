@@ -216,11 +216,11 @@ async function genPdf(html, outPath) {
     path: outPath,
     format: 'A4',
     printBackground: true,
-    margin: { top: '18mm', bottom: '18mm', left: '20mm', right: '20mm' },
+    margin: { top: '25mm', bottom: '25mm', left: '25mm', right: '25mm' },
     displayHeaderFooter: true,
-    headerTemplate: `<div style="width:100%;font-size:7pt;color:#aaa;font-family:'Times New Roman',serif;padding:0 20mm;text-align:right;"><span class="title"></span></div>`,
-    footerTemplate: `<div style="width:100%;font-size:8pt;color:#999;font-family:'Times New Roman',serif;padding:0 20mm;text-align:center;">
-      <div style="border-top:0.5px solid #ccc;padding-top:0.5mm;">— <span class="pageNumber"></span> —</div>
+    headerTemplate: `<div style="width:100%;font-size:7pt;color:#888;font-family:'Times New Roman',serif;padding:0 25mm;text-align:right;"><span class="title"></span></div>`,
+    footerTemplate: `<div style="width:100%;font-size:8pt;color:#888;font-family:'Times New Roman',serif;padding:0 25mm;text-align:center;">
+      <div style="border-top:0.5px solid #aaa;padding-top:1mm;">— <span class="pageNumber"></span> —</div>
     </div>`,
   });
   await browser.close();
