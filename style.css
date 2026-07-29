@@ -1,4 +1,8 @@
-/* ─── Legal Docs Professional PDF Style ─── */
+/* ═══════════════════════════════════════════════════
+   LEGAL DOCUMENT — Classic Professional Style
+   Serif font, formal layout, proper margins
+   ═══════════════════════════════════════════════════ */
+
 @page {
   size: A4;
   margin: 0;
@@ -7,10 +11,10 @@
 * { box-sizing: border-box; }
 
 body {
-  font-family: 'Inter', 'Segoe UI', -apple-system, sans-serif;
-  color: #1e293b;
-  line-height: 1.75;
-  font-size: 10.5pt;
+  font-family: 'Times New Roman', Times, Georgia, 'Liberation Serif', serif;
+  color: #111;
+  line-height: 1.6;
+  font-size: 11.5pt;
   margin: 0;
   padding: 0;
   background: #fff;
@@ -21,348 +25,303 @@ body {
   padding: 0;
 }
 
-/* ── Document Header ── */
+/* ─────────────────────────────────────────────
+   RUNNING DOC HEADER
+   Clean: [ID]  [centered TITLE]  [date]
+   ───────────────────────────────────────────── */
 .doc-header {
-  text-align: center;
-  margin-bottom: 10mm;
-  padding-bottom: 5mm;
-  border-bottom: 2px solid #0f766e;
-}
-
-.doc-header h1 {
-  font-size: 18pt;
-  color: #0f172a;
-  margin: 0 0 2mm 0;
-  font-weight: 700;
-  border: none;
-  padding: 0;
-}
-
-.doc-header .doc-sub {
-  font-size: 9pt;
-  color: #64748b;
-  font-weight: 400;
-}
-
-.doc-header .doc-nomor {
-  font-size: 10pt;
-  color: #475569;
-  margin-top: 3mm;
-  font-weight: 500;
-}
-
-.doc-header .doc-tanggal {
-  font-size: 9pt;
-  color: #64748b;
-}
-
-/* ── Document Body ── */
-.doc-body {
-  padding: 0;
-}
-
-/* ── Headings ── */
-h1 {
-  font-size: 16pt;
-  color: #0f172a;
-  margin-top: 10mm;
   margin-bottom: 6mm;
-  font-weight: 700;
-  border-bottom: 1.5px solid #e2e8f0;
   padding-bottom: 2mm;
+  border-bottom: 1px solid #111;
 }
+
+.doc-header-inner {
+  width: 100%;
+}
+
+.doc-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 8.5pt;
+}
+
+.doc-id {
+  font-family: 'Courier New', monospace;
+  color: #555;
+  width: 25%;
+  text-align: left;
+}
+
+.doc-title-line {
+  font-weight: 700;
+  font-size: 12pt;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  width: 50%;
+}
+
+.doc-date {
+  font-style: italic;
+  color: #555;
+  width: 25%;
+  text-align: right;
+}
+
+.doc-header-spacer {
+  height: 1px;
+  background: #111;
+  margin-top: 2mm;
+}
+
+/* ─────────────────────────────────────────────
+   INFO BOX — Fase/Tujuan card
+   ───────────────────────────────────────────── */
+.info-box {
+  background: #f8f8f8;
+  border: 0.5px solid #bbb;
+  border-left: 3px solid #666;
+  padding: 2mm 3mm;
+  margin-bottom: 5mm;
+  font-size: 10pt;
+  color: #333;
+  line-height: 1.5;
+}
+
+.info-box p {
+  margin: 0;
+  text-align: left;
+}
+
+.info-box br {
+  display: none;
+}
+
+/* ─────────────────────────────────────────────
+   HEADINGS
+   ───────────────────────────────────────────── */
+h1 {
+  font-size: 13pt;
+  font-weight: 700;
+  margin: 7mm 0 4mm 0;
+  padding-bottom: 1mm;
+  border-bottom: 0.5px solid #aaa;
+  page-break-before: always;
+}
+
+h1:first-of-type { page-break-before: avoid; margin-top: 0; }
 
 h2 {
-  font-size: 13pt;
-  color: #0f172a;
-  margin-top: 8mm;
-  margin-bottom: 4mm;
-  font-weight: 600;
-}
-
-h3 {
-  font-size: 11pt;
-  color: #334155;
-  margin-top: 6mm;
-  margin-bottom: 3mm;
-  font-weight: 600;
-}
-
-h4 {
-  font-size: 10.5pt;
-  color: #475569;
-  margin-top: 4mm;
-  margin-bottom: 2mm;
-  font-weight: 600;
-}
-
-h1:first-of-type {
-  margin-top: 0;
-}
-
-/* ── Info Box ── */
-.info-box {
-  background: #f0fdfa;
-  border: 1px solid #0f766e;
-  border-left: 4px solid #0f766e;
-  border-radius: 2px;
-  padding: 3mm 4mm;
-  margin-bottom: 6mm;
-  font-size: 9.5pt;
-  color: #475569;
-}
-
-.info-box strong {
-  color: #0f766e;
-}
-
-/* ── Party Section (Pihak Pertama / Kedua) ── */
-.party-section {
-  margin: 4mm 0 6mm 0;
-  padding: 3mm 0;
-}
-
-.party-section .party-title {
-  font-weight: 600;
-  color: #0f766e;
-  font-size: 11pt;
-  margin-bottom: 1mm;
-}
-
-.party-section .party-detail {
-  margin-left: 5mm;
-  line-height: 2;
-}
-/* ── pasal / article styling ── */
-.pasal-title {
+  font-size: 12pt;
   font-weight: 700;
-  color: #0f172a;
-  font-size: 11pt;
-  margin-top: 5mm;
-  margin-bottom: 2mm;
-  background: #f8fafc;
-  padding: 1.5mm 3mm;
-  border-left: 3px solid #0f766e;
+  margin: 5mm 0 3mm 0;
 }
 
-/* ── Tables ── */
+.pasal-title {
+  font-size: 11.5pt;
+  font-weight: 700;
+  margin: 4mm 0 2mm 0;
+  font-variant: small-caps;
+  letter-spacing: 0.3px;
+}
+
+.subsection-title {
+  font-size: 11pt;
+  font-weight: 700;
+  margin: 3mm 0 2mm 0;
+  font-style: italic;
+}
+
+/* ─────────────────────────────────────────────
+   PARAGRAPHS
+   ───────────────────────────────────────────── */
+p {
+  margin: 0 0 1.5mm 0;
+  text-align: justify;
+}
+p:empty { display: none; }
+
+/* ─────────────────────────────────────────────
+   PARTY SECTIONS (PIHAK PERTAMA / KEDUA)
+   ───────────────────────────────────────────── */
+.party-header {
+  text-align: center;
+  font-weight: 700;
+  font-size: 11pt;
+  margin: 3mm 0 0.5mm 0;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.party-desc {
+  text-align: center;
+  font-size: 10pt;
+  margin-bottom: 2mm;
+  color: #444;
+  font-style: italic;
+}
+
+/* ─────────────────────────────────────────────
+   CLOSING STATEMENT
+   ───────────────────────────────────────────── */
+.closing-statement {
+  margin: 6mm 0 3mm 0;
+  text-align: center;
+  color: #444;
+  font-size: 10pt;
+  font-style: italic;
+  border-top: 0.5px solid #ccc;
+  padding-top: 3mm;
+}
+
+.closing-statement p { text-align: center; }
+
+/* ─────────────────────────────────────────────
+   SIGNATURE / TTD
+   ───────────────────────────────────────────── */
+.ttd-line {
+  display: flex;
+  justify-content: space-between;
+  margin: 8mm 0 2mm 0;
+}
+
+.ttd-col {
+  width: 45%;
+  text-align: center;
+}
+
+.ttd-col .sig-space {
+  height: 15mm;
+  display: block;
+}
+
+.ttd-col .sig-name {
+  border-top: 0.5px solid #111;
+  padding-top: 1.5mm;
+  font-weight: 700;
+  font-size: 10.5pt;
+}
+
+.ttd-col .sig-role {
+  font-size: 9pt;
+  color: #666;
+  margin-top: 0.5mm;
+  font-style: italic;
+}
+
+.ttd-col .sig-materai {
+  font-size: 8pt;
+  color: #999;
+  margin-top: 2mm;
+}
+
+/* ─────────────────────────────────────────────
+   TABLES
+   ───────────────────────────────────────────── */
 table {
   width: 100%;
   border-collapse: collapse;
-  margin: 4mm 0;
-  font-size: 9.5pt;
+  margin: 3mm 0;
+  font-size: 10pt;
 }
 
 th, td {
-  border: 1px solid #cbd5e1;
-  padding: 2mm 3mm;
+  border: 0.5px solid #999;
+  padding: 1.5mm 2.5mm;
   text-align: left;
   vertical-align: top;
 }
 
 th {
-  background: #f1f5f9;
-  font-weight: 600;
-  color: #0f172a;
+  background: #eee;
+  font-weight: 700;
   font-size: 9pt;
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
 }
 
-tr:nth-child(even) td {
-  background: #fafbfc;
+tr:nth-child(even) td { background: #fafafa; }
+
+/* ─────────────────────────────────────────────
+   HORIZONTAL RULES
+   ───────────────────────────────────────────── */
+hr {
+  border: none;
+  border-top: 0.5px solid #ccc;
+  margin: 3mm 0;
 }
 
-/* ── Code blocks & pre ── */
-pre, code {
-  font-family: 'JetBrains Mono', 'Cascadia Code', 'Consolas', monospace;
-  font-size: 8.5pt;
-}
-
-pre {
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 2px;
-  padding: 2.5mm 3.5mm;
-  overflow-x: auto;
-  white-space: pre-wrap;
-  line-height: 1.5;
-}
-
-code {
-  background: #f1f5f9;
-  padding: 0.3mm 1.5mm;
-  border-radius: 2px;
-  color: #0f172a;
-}
-
-/* ── Lists ── */
+/* ─────────────────────────────────────────────
+   LISTS
+   ───────────────────────────────────────────── */
 ul, ol {
-  margin: 2mm 0 2mm 5mm;
+  margin: 1.5mm 0 1.5mm 5mm;
   padding: 0;
 }
 
-li {
-  margin-bottom: 1mm;
-}
-
+li { margin-bottom: 0.8mm; }
 ul li { list-style-type: disc; }
 ul li ul li { list-style-type: circle; }
 ol li { list-style-type: decimal; }
 
-/* ── Checklist Items ── */
-.checklist {
-  list-style: none;
-  margin-left: 0;
-  padding-left: 0;
+/* ─────────────────────────────────────────────
+   CODE / MONOSPACE
+   ───────────────────────────────────────────── */
+pre, code {
+  font-family: 'Courier New', Consolas, monospace;
+  font-size: 9pt;
 }
 
-.checklist li {
-  padding-left: 5mm;
-  position: relative;
+pre {
+  background: #f5f5f5;
+  border: 0.5px solid #ccc;
+  padding: 2mm 3.5mm;
+  white-space: pre-wrap;
+  line-height: 1.4;
 }
 
-.checklist li::before {
-  content: "□";
-  position: absolute;
-  left: 0;
-  color: #64748b;
-  font-size: 10pt;
+code {
+  background: #f5f5f5;
+  padding: 0.2mm 1.5mm;
 }
 
-.checklist li.checked::before {
-  content: "☑";
-  color: #0f766e;
-}
-
-/* ── Blockquote ── */
-blockquote {
-  border-left: 3px solid #0f766e;
-  background: #f0fdfa;
-  margin: 3mm 0;
-  padding: 2mm 4mm;
-  font-size: 10pt;
-  color: #334155;
-}
-
-blockquote p { margin: 0; }
-
-/* ── Horizontal rules ── */
-hr {
-  border: none;
-  border-top: 1px solid #e2e8f0;
-  margin: 5mm 0;
-}
-
-/* ── Strong / emphasis ── */
-strong {
-  color: #0f172a;
-}
-
-em {
-  color: #475569;
-}
-
-/* ── Signature Section ── */
-.signature-section {
-  margin-top: 10mm;
-  padding-top: 5mm;
-  border-top: 1px solid #e2e8f0;
-}
-
-.signature-row {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 8mm;
-}
-
-.signature-block {
-  width: 45%;
+/* ─────────────────────────────────────────────
+   INVOICE
+   ───────────────────────────────────────────── */
+.invoice-box {
+  border: 1.5px solid #111;
+  padding: 5mm 8mm;
+  margin-bottom: 5mm;
   text-align: center;
 }
 
-.signature-block .sig-line {
-  margin-top: 15mm;
-  border-top: 1px solid #1e293b;
-  padding-top: 2mm;
-  font-size: 10pt;
-  font-weight: 600;
-  color: #0f172a;
-}
-
-.signature-block .sig-title {
-  font-size: 9pt;
-  color: #64748b;
-  margin-bottom: 2mm;
-}
-
-.signature-block .sig-materai {
-  font-size: 8pt;
-  color: #94a3b8;
-  margin-top: 3mm;
-}
-
-/* ── Invoice Template ── */
-.invoice-header-box {
-  border: 2px solid #0f766e;
-  padding: 5mm 6mm;
-  margin-bottom: 6mm;
-  text-align: center;
-}
-
-.invoice-header-box h1 {
-  margin: 0;
+.invoice-box h1 {
+  margin: 0 0 1mm 0;
   border: none;
-  font-size: 22pt;
-  color: #0f766e;
-  letter-spacing: 3px;
-}
-
-.invoice-table-summary td:last-child {
-  text-align: right;
-  font-weight: 600;
-}
-
-.invoice-total-row td {
-  border-top: 2px solid #0f172a;
-  font-weight: 700;
-  font-size: 11pt;
-  background: #f8fafc !important;
-}
-
-/* ── UAT Checklist ── */
-.uat-status {
-  display: inline-block;
-  padding: 1mm 3mm;
-  border-radius: 2px;
-  font-size: 9pt;
-  font-weight: 600;
-}
-
-.uat-status.pass {
-  background: #dcfce7;
-  color: #166534;
-}
-
-.uat-status.fail {
-  background: #fee2e2;
-  color: #991b1b;
-}
-
-/* ── Page breaks ── */
-h1 {
-  page-break-before: always;
-}
-
-h1:first-of-type {
+  font-size: 20pt;
+  letter-spacing: 4px;
   page-break-before: avoid;
 }
 
-section, .doc-wrapper > :nth-child(n+2) {
-  page-break-inside: avoid;
+.invoice-total td {
+  border-top: 1.5px solid #111;
+  font-weight: 700;
+  background: #f5f5f5 !important;
 }
 
-/* ── Print-specific ── */
+/* ─────────────────────────────────────────────
+   UAT STATUS
+   ───────────────────────────────────────────── */
+.uat-pass { color: #166534; }
+.uat-fail { color: #991b1b; }
+
+/* ─────────────────────────────────────────────
+   PAGE BREAKS
+   ───────────────────────────────────────────── */
+.page-break { page-break-before: always; }
+
+/* ─────────────────────────────────────────────
+   PRINT
+   ───────────────────────────────────────────── */
 @media print {
   body {
     -webkit-print-color-adjust: exact;

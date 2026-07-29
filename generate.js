@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { readFileSync, mkdirSync, existsSync } from 'node:fs';
 import { marked } from 'marked';
 import puppeteer from 'puppeteer';
 import { join, dirname } from 'node:path';
@@ -6,149 +6,165 @@ import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-// ─── Ordered docs ──────────────────────────
 const docs = [
-  { file: '01-project-brief.md',     title: 'Project Brief',                    id: 'FRM-PB' },
-  { file: '02-proposal.md',           title: 'Proposal & Quotation',            id: 'FRM-PQ' },
-  { file: '03-nda.md',                title: 'Non-Disclosure Agreement',         id: 'FRM-NDA' },
-  { file: '04-spk.md',                title: 'Surat Perjanjian Kerja (SPK)',     id: 'FRM-SPK' },
-  { file: '05-sow.md',                title: 'Statement of Work (SOW)',          id: 'FRM-SOW' },
-  { file: '06-change-order.md',       title: 'Change Order',                     id: 'FRM-CO' },
-  { file: '07-progress-report.md',    title: 'Laporan Progress & Meeting Notes', id: 'FRM-PR' },
-  { file: '08-bast-uat.md',           title: 'BAST & UAT',                       id: 'FRM-BAST' },
-  { file: '09-invoice.md',            title: 'Invoice',                          id: 'FRM-INV' },
-  { file: '10-maintenance.md',        title: 'Perjanjian Maintenance & Support', id: 'FRM-MAINT' },
+  { file: '01-project-brief.md',     title: 'Project Brief',                    id: 'FRM-PB-001' },
+  { file: '02-proposal.md',          title: 'Proposal & Quotation',             id: 'FRM-PQ-001' },
+  { file: '03-nda.md',               title: 'Non-Disclosure Agreement',         id: 'FRM-NDA-001' },
+  { file: '04-spk.md',               title: 'Surat Perjanjian Kerja (SPK)',     id: 'FRM-SPK-001' },
+  { file: '05-sow.md',               title: 'Statement of Work (SOW)',          id: 'FRM-SOW-001' },
+  { file: '06-change-order.md',      title: 'Change Order',                     id: 'FRM-CO-001' },
+  { file: '07-progress-report.md',   title: 'Progress Report & Meeting Notes',  id: 'FRM-PR-001' },
+  { file: '08-bast-uat.md',          title: 'BAST & UAT',                       id: 'FRM-BAST-001' },
+  { file: '09-invoice.md',           title: 'Invoice',                          id: 'FRM-INV-001' },
+  { file: '10-maintenance.md',       title: 'Perjanjian Maintenance',           id: 'FRM-MAINT-001' },
 ];
 
 const css = readFileSync(join(__dirname, 'style.css'), 'utf-8');
-
 const chromePaths = [
   '/home/abdanzamzam/.cache/puppeteer/chrome/linux-150.0.7871.24/chrome-linux64/chrome',
   '/home/abdanzamzam/.cache/puppeteer/chrome/linux-148.0.7778.97/chrome-linux64/chrome',
-  '/home/abdanzamzam/.cache/puppeteer/chrome/linux-127.0.6533.88/chrome-linux64/chrome',
   '/snap/bin/chromium',
-];
-const chromePath = chromePaths.find(p => { try { readFileSync(p); return true; } catch { return false; } }) || chromePaths[0];
+].filter(p => { try { return !!readFileSync(p); } catch { return false; } });
+const chromePath = chromePaths[0];
 
 const outDir = join(__dirname, 'pdf');
 mkdirSync(outDir, { recursive: true });
 
-// ─── Footer template ───────────────────────
-const footerTmpl = [
-  `<div style="width:100%;text-align:center;font-size:8pt;color:#94a3b8;font-family:Inter,sans-serif;">`,
-  `  <span style="margin:0 15mm;">— <span class="pageNumber"></span> —</span>`,
-  `</div>`,
-].join('');
+// ─── Preprocess markdown ──────────────────
+function preprocess(md) {
+  return md
+    // Checklist
+    .replace(/- \[ \]/g, '- ☐')
+    .replace(/- \[x\]/g, '- ☑')
+    .replace(/- \[✓\]/g, '- ☑')
+    // Clean nbsp entities
+    .replace(/&nbsp;/g, ' ')
+    // Collapse multiple spaces
+    .replace(/ {2,}/g, ' ');
+}
 
-// ─── Header template ───────────────────────
-const headerTmpl = [
-  `<div style="width:100%;text-align:center;font-size:7.5pt;color:#94a3b8;font-family:Inter,sans-serif;">`,
-  `  <span id="docTitle" style="margin:0 15mm;"></span>`,
-  `</div>`,
-].join('');
+// ─── Post-process HTML ─────────────────────
+function postprocess(html, docId) {
+  // Wrap PIHAK PERTAMA/KEDUA
+  html = html.replace(
+    /<p><strong>PIHAK (PERTAMA|KEDUA)<\/strong>\s*—\s*(.+?)<\/p>/g,
+    (m, num, desc) => `<div class="party-header">PIHAK ${num}</div><div class="party-desc">${desc}</div>`
+  );
 
-// ─── Transform MD to professional HTML ────
-function wrapHtml(md, doc) {
-  // Extract first heading as document title
+  // Pasal titles (h3)
+  html = html.replace(/<h3\s*>/g, '<h3 class="pasal-title">');
+
+  // Tanda tangan sections: look for two **[Name]** separated by text
+  html = html.replace(
+    /\(Tanda tangan &amp; meterai\)\s*&amp;nbsp;\s*\(Tanda tangan &amp; meterai\)/g,
+    '(Tanda tangan & meterai)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Tanda tangan & meterai)'
+  );
+
+  // Signature block — detect "[Nama Klien]" / "[Nama Kamu]" patterns
+  html = html.replace(
+    /<p>\*\*(?:Nama Klien|Nama Kamu|Nama (?:Client|Pengembang|Klien|Kamu))\*\*(?:<\/strong>)?(?:\s|&nbsp;)*(?:\*\*(?:Nama Klien|Nama Kamu|Nama (?:Client|Pengembang|Klien|Kamu))\*\*)?<\/p>/g,
+    (m) => {
+      // Extract names
+      const names = [...m.matchAll(/\*\*([^*]+)\*\*/g)].map(x => x[1]);
+      if (names.length === 0) return m;
+
+      const cols = names.map(n => {
+        const isMaterai = n.toLowerCase().includes('tanda tangan') || n.toLowerCase().includes('meterai');
+        return `<div class="ttd-col">
+          <span class="sig-space"></span>
+          <div class="sig-name">${n.replace(/&amp;/g, '&')}</div>
+          <div class="sig-materai">(meterai Rp10.000)</div>
+        </div>`;
+      }).join('');
+
+      return `<div class="ttd-line">${cols}</div>`;
+    }
+  );
+
+  return html;
+}
+
+// ─── Build full HTML page ──────────────────
+function buildHtml(md, doc) {
   const titleMatch = md.match(/^# (.+)$/m);
-  const docTitle = titleMatch ? titleMatch[1] : doc.title;
+  const docTitle = titleMatch ? titleMatch[1].replace(/\*\*/g, '') : doc.title;
+  const body = preprocess(md.replace(/^# .+\n?/, ''));
 
-  // Remove the first heading (will use custom header)
-  let body = md.replace(/^# .+\n?/, '');
+  const today = new Date().toLocaleDateString('id-ID', {
+    day: 'numeric', month: 'long', year: 'numeric'
+  });
 
-  // Parse body with marked
-  const content = marked.parse(body);
+  // Manually parse the content with marked
+  const parsed = marked.parse(body);
 
-  // Transform tables: add classes
-  // Transform blockquotes: they are already <blockquote>
-
-  // Define page size base on content — SPK, BAST, NDA need full width
-  const isLegal = ['04-spk.md', '03-nda.md', '08-bast-uat.md', '10-maintenance.md'].includes(doc.file);
-  const isInvoice = doc.file === '09-invoice.md';
+  // Post-process
+  const content = postprocess(parsed, doc.id);
 
   return `<!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
   <style>
-    ${css}
-    ${isInvoice ? '.doc-wrapper { max-width: 100%; }' : ''}
+${css}
   </style>
 </head>
 <body>
   <div class="doc-wrapper">
-
-    <!-- Document Header -->
     <div class="doc-header">
-      <h1 style="border:none;padding:0;margin:0;page-break-before:avoid;">${docTitle}</h1>
-      ${isLegal ? `<div class="doc-sub">Dokumen Hukum — ${doc.id}</div>` : `<div class="doc-sub">Kode Dokumen: ${doc.id}</div>`}
+      <div class="doc-header-inner">
+        <div class="doc-header-row">
+          <span class="doc-id">${doc.id}</span>
+          <span class="doc-title-line">${docTitle}</span>
+          <span class="doc-date">${today}</span>
+        </div>
+      </div>
+      <div class="doc-header-spacer"></div>
     </div>
-
-    <!-- Document Body -->
     <div class="doc-body">
       ${content}
     </div>
-
-    <!-- Footer Note -->
-    <div style="margin-top:10mm;padding-top:3mm;border-top:1px solid #e2e8f0;font-size:7.5pt;color:#94a3b8;text-align:center;">
-      ${doc.title} — ${doc.id}<br>
-      © ${new Date().getFullYear()} — Dokumen ini adalah template, isi sesuai kebutuhan project.
-    </div>
-
   </div>
 </body>
 </html>`;
 }
 
-// ─── PDF generation ─────────────────────────
-async function genPdf(html, outPath, isLegal) {
+// ─── Generate PDF ──────────────────────────
+async function genPdf(html, outPath) {
   const browser = await puppeteer.launch({
     headless: true,
-    args: [
-      '--no-sandbox',
-      '--disable-setuid-sandbox',
-      '--disable-dev-shm-usage',
-      '--disable-gpu',
-    ],
+    args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--disable-gpu'],
     executablePath: chromePath,
   });
-
   const page = await browser.newPage();
-  await page.setContent(html, {
-    waitUntil: 'networkidle0',
-    timeout: 30000,
-  });
+  await page.setContent(html, { waitUntil: 'networkidle0', timeout: 30000 });
 
   await page.pdf({
     path: outPath,
     format: 'A4',
     printBackground: true,
-    margin: {
-      top: '18mm',
-      bottom: '18mm',
-      left: isLegal ? '22mm' : '20mm',
-      right: isLegal ? '22mm' : '20mm',
-    },
+    margin: { top: '20mm', bottom: '18mm', left: '22mm', right: '18mm' },
     displayHeaderFooter: true,
-    headerTemplate: headerTmpl,
-    footerTemplate: footerTmpl,
+    headerTemplate: `<div style="width:100%;font-size:7pt;color:#888;font-family:'Times New Roman',serif;padding:0 22mm;text-align:right;font-style:italic;">
+      <span class="title"></span>
+    </div>`,
+    footerTemplate: `<div style="width:100%;font-size:7.5pt;color:#888;font-family:'Times New Roman',serif;padding:0 22mm;text-align:center;">
+      <div style="border-top:0.5px solid #bbb;padding-top:0.5mm;">— <span class="pageNumber"></span> —</div>
+    </div>`,
   });
 
   await browser.close();
-  console.log('✅', outPath);
+  const size = (readFileSync(outPath).length / 1024).toFixed(0);
+  console.log(`✅ ${outPath.split('/').pop()} (${size}KB)`);
 }
 
 // ─── MAIN ───────────────────────────────────
-console.log('🚀 Generating profesional PDF documents...\n');
+console.log('🚀 Generating legal PDF documents (Times New Roman style)...\n');
 
-let i = 0;
 for (const doc of docs) {
-  i++;
   const md = readFileSync(join(__dirname, doc.file), 'utf-8');
-  const html = wrapHtml(md, doc);
+  const html = buildHtml(md, doc);
   const outPath = join(outDir, doc.file.replace(/\.md$/, '.pdf'));
-  const isLegal = ['04-spk.md', '03-nda.md', '08-bast-uat.md', '10-maintenance.md'].includes(doc.file);
-  await genPdf(html, outPath, isLegal);
+  await genPdf(html, outPath);
 }
 
-console.log(`\n🎉 ${docs.length} PDF profesional berhasil dibuat di: ${outDir}/`);
+console.log(`\n🎉 ${docs.length} PDF selesai!`);
