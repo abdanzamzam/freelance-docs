@@ -5,7 +5,7 @@
 
 @page {
   size: A4;
-  margin: 30mm 28mm 28mm 28mm;
+  margin: 0;
 }
 
 * { box-sizing: border-box; }
@@ -23,6 +23,10 @@ body {
 .doc-wrapper {
   max-width: 100%;
   padding: 2mm 0 0 0;
+}
+
+.doc-body {
+  padding: 0 3mm;
 }
 
 /* ─────────────────────────────────────────────
